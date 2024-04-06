@@ -55,26 +55,41 @@ of the group, e.g.:
 \end{itemize}
 
 \item Links to the project source code:  \url{https://github.com/marcomole00/open-nic-driver/tree/xdp-support}
-Note: our work is in the 
+Note: our work is in the \textbf{xdp-support} branch
 
 \end{itemize}
 
 
 \section{Project description}
 
+% What are the goals
+% Why it is important to the AOS course? 
+\subsection{Project goals}
 The goal of this project is to implement the \textit{eXpress Data Path} (XDP) for the driver of the \textbf{AMD OpenNIC project}.
+
+XDP is a high-performance  data path for network packets present in the Linux kernel since version 4.8. It enables users to install packet processing programs in the kernel before the invocation of the standard network stack. 
+
+These programs are written and executed in eBPF which is a language/runtime for extending operating systems.
+
+
+
+\subsection{Importance to the AOS course}
+This project is relevant to the Advanced Operating System course because it involves extending the functionality of a Linux driver, which is an argument of the course.
+
 
 
 \subsection{Design and implementation}
-Describe here the structure of the solution you devised. Note, don't put major
-parts of the source code here; if you can, put hyperlinks to existing repos.
+%Describe here the structure of the solution you devised. Note, don't put major
+%parts of the source code here; if you can, put hyperlinks to existing repos.
 
-For those who choose to work on an open source project, please put here an
-history (mail messages/github issues etc..) of the interaction with the
-development team that helped you identify such design and the code reviews that
-helped you improve it.
+%For those who choose to work on an open source project, please put here an
+%history (mail messages/github issues etc..) of the interaction with the
+%development team that helped you identify such design and the code reviews that
+%helped you improve it.
 
-Those that have chosen to present a paper can exclude this section. 
+% Those that have chosen to present a paper can exclude this section. 
+
+
 
 \section{Project outcomes}
 
