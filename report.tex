@@ -66,7 +66,7 @@ Note: our work is in the \texttt{xdp-support} branch
 % Why it is important to the AOS course?
 \subsection{Project goals}
 The goal of this project is to add support for \textit{eXpress Data Path} (XDP)
-offloading for the driver of the \textbf{AMD OpenNIC project}.
+for the driver of the \textbf{AMD OpenNIC project}.
 
 XDP is a high-performance data path for network packets present in the Linux
 kernel since version 4.8. It enables users to install packet processing programs
@@ -83,7 +83,7 @@ requires extending the functionality of a Linux driver. Doing so requires
 understanding how Linux kernel modules are written and compiled, both of which
 are topics of the course.
 
-Moreover, implementing XDP offloading requires knowledge of the Linux networking
+Moreover, implementing XDP requires knowledge of the Linux networking
 stack, which even though is not a topic of the AOS course but of
 the supervisors' Netowrk Computing course, it is still an important part of the
 Linux kernel.
@@ -131,7 +131,7 @@ Those changes have been done mainly to the \texttt{onic\_ethtool.c} file.
 %Those that have chosen to present a paper can include a link to the slides.
 
 We have produced a series of commits on a fork of the OpenNIC repository
-implementing XDP offload and a repo containing some tests for the various return
+implementing XDP and a repo containing some tests for the various return
 values of XDP programs.
 
 Links:
@@ -143,31 +143,39 @@ Links:
 \end{itemize}
 
 \subsection{Learning outcomes}
-
-What was the most important thing all the members have learned while
-developing this part of the project, what questions remained unanswered,
-how you will use what you've learned in your everyday life?
-Please also indicate which tools you learned to use.
-
-Examples:
-
+% What was the most important thing all the members have learned while
+% developing this part of the project, what questions remained unanswered,
+% how you will use what you've learned in your everyday life?
+% Please also indicate which tools you learned to use.
 \begin{itemize}
-\item Foo learned to write multithreaded applications, he's probably going to
-  create his own startup with what she has learned. She also learned how to
-  debug with gdb.
-\item Bar learned how to interact with the open source community, politely
-  answering to code reviews and issuing pull requests through Git.
+
+\item We gained insights on how the linux kernel code is structured and how to navigate it
+effectively when searching for a specific function. We made extensive use of the \textit{Elixir Cross Referencer} \footnote{\url{https://elixir.bootlin.com}}.
+
+\item We learned to search in commit messages or mailing list archives when in doubt about certain pieces of code.
+\item We learned how to correctly setup the environment for kernel module programming.
+
 \end{itemize}
+
+
+% Examples:
+
+% \begin{itemize}
+% \item Foo learned to write multithreaded applications, he's probably going to
+%   create his own startup with what she has learned. She also learned how to
+%   debug with gdb.
+% \item Bar learned how to interact with the open source community, politely
+%   answering to code reviews and issuing pull requests through Git.
+% \end{itemize}
 
 \subsection{Existing knowledge}
 %What courses you have followed (not only AOS) did help you in doing this project
 %and why? Do you have any suggestions on improving the AOS course with topics
 %that would have made it easier for you?
 
-Both Bradatan and Molè followed profs. Antichi and Miano's Network Computing
-course.
-
-%% TODO: gli suggeriamo qualcosa o lasciamo così?
+Bradatan followed profs. Antichi and Miano's Network Computing course last year,
+Molè is following it this semester. The course provides insights on how the Linux
+network stack is implemented.
 
 \subsection{Problems encountered}
 %What were the most important problems and issues you encountered? Did you ever
@@ -181,8 +189,12 @@ course.
 The main problem we encountered was the lack of (or when present
 poor quality of) documentation on some parts of the linux networking stack and
 on OpenNIC driver code. This required some hunting around sources and
-cross-referencing with other driver's implementations to get resolved.
+cross-referencing with other driver's implementations to get resolved. 
 
+
+Another thing we had to consider is that the XDP API and the network stack data structures changed 
+over time and that led to some inconsistency in kernel versions previous to 5.3.0 that hindered us from
+implementing the \textit{onic\_xdp\_xmit\_frame} function function, and thus the support for XDP\_TX and XDP\_REDIRECT in those older versions.  
 %% TODO: consideriamo "alcune volte l'API interna del kernel è cambiata e ciò ha
 %%       rotto le balle" come problema?
 
@@ -195,7 +207,7 @@ Conduct) and represents my/our original production, unless otherwise cited.
 
 I/We also understand that this project, if successfully graded,  will fulfill part B requirement of the
 Advanced Operating System course and that it will be considered valid up until
-the AOS exam of Sept. 2022.
+the AOS exam of Sept. 2024.
 
 \begin{flushright}
 Group Students' signatures
