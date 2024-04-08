@@ -1,11 +1,10 @@
-
 \documentclass[10pt,a4]{article}
 \usepackage[english]{babel}
 \usepackage[utf8x]{inputenc}
 \usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage[colorinlistoftodos]{todonotes}
-\usepackage{hyperref}
+\PassOptionsToPackage{hyphens}{url}\usepackage{hyperref}
 \usepackage{geometry}
 \geometry{top=3cm,left=2cm,right=2cm,bottom=3cm}
 \usepackage[scaled]{helvet}
@@ -28,17 +27,15 @@
 \section{Project data}
 
 \begin{itemize}
-\item  Project supervisor(s): Gianni Antichi \& Sebastiano Miano 
-
-\item 
-Describe in this table the group that is delivering this project:
+\item Project supervisor(s): Gianni Antichi \& Sebastiano Miano
+\item Describe in this table the group that is delivering this project:
 
 \begin{center}
 \begin{tabular}{lll}
 Last and first name & Person code & Email address\\
 \hline
-  Alexandru Gabriel Bradatan & 0101010 & alexandrugabriel.bradatan@mail.polimi.it \\
-  Marco Molè & 10676087  &     marco.mole@mail.polimi.it        
+  Alexandru Gabriel Bradatan & 10658858 & alexandrugabriel.bradatan@mail.polimi.it \\
+  Marco Molè & 10676087  &     marco.mole@mail.polimi.it
 \end{tabular}
 \end{center}
 
@@ -49,13 +46,16 @@ of the group, e.g.:
 \begin{itemize}
 \item Most of the code was written in pair programming sessions.
 \begin{itemize}
-	\item We found the pair programming approach really useful to delve into the XDP API, which is documented a bit poorly. 
+	\item We found the pair programming approach really useful to delve into the XDP API, which sometimes is poorly documented.
 \end{itemize}
 \item Bradatan worked on a eBPF testing suite that was not deemed necessary at the end.
+\begin{itemize}
+  \item Link to the tests: \url{https://github.com/alexbradd/ebpf-xdp-test-suite}
+\end{itemize}
 \end{itemize}
 
-\item Links to the project source code:  \url{https://github.com/marcomole00/open-nic-driver/tree/xdp-support}
-Note: our work is in the \textbf{xdp-support} branch
+\item Links to the project source code: \url{https://github.com/marcomole00/open-nic-driver/tree/xdp-support}
+Note: our work is in the \texttt{xdp-support} branch
 
 \end{itemize}
 
@@ -63,18 +63,30 @@ Note: our work is in the \textbf{xdp-support} branch
 \section{Project description}
 
 % What are the goals
-% Why it is important to the AOS course? 
+% Why it is important to the AOS course?
 \subsection{Project goals}
-The goal of this project is to implement the \textit{eXpress Data Path} (XDP) for the driver of the \textbf{AMD OpenNIC project}.
+The goal of this project is to add support for \textit{eXpress Data Path} (XDP)
+offloading for the driver of the \textbf{AMD OpenNIC project}.
 
-XDP is a high-performance  data path for network packets present in the Linux kernel since version 4.8. It enables users to install packet processing programs in the kernel before the invocation of the standard network stack. 
-
-These programs are written and executed in eBPF which is a language/runtime for extending operating systems.
+XDP is a high-performance data path for network packets present in the Linux
+kernel since version 4.8. It enables users to install packet processing programs
+in the kernel that are executed before the invocation of the standard network stack.
+These programs are written and executed in eBPF, a subset of C that can be
+verified to terminate and to not corrupt kernel memory making it safe to use for
+extending the kernel's functionality.
 
 
 
 \subsection{Importance to the AOS course}
-This project is relevant to the Advanced Operating System course because it involves extending the functionality of a Linux driver, which is an argument of the course.
+This project is relevant to the Advanced Operating System course because it
+requires extending the functionality of a Linux driver. Doing so requires
+understanding how Linux kernel modules are written and compiled, both of which
+are topics of the course.
+
+Moreover, implementing XDP offloading requires knowledge of the Linux networking
+stack, which even though is not a topic of the AOS course but of
+the supervisors' Netowrk Computing course, it is still an important part of the
+Linux kernel.
 
 
 
@@ -87,18 +99,48 @@ This project is relevant to the Advanced Operating System course because it invo
 %development team that helped you identify such design and the code reviews that
 %helped you improve it.
 
-% Those that have chosen to present a paper can exclude this section. 
+% Those that have chosen to present a paper can exclude this section.
 
+We based our implementation based on some previous work done on the Intel
+driver (link: \url{https://patchwork.ozlabs.org/project/intel-wired-lan/patch/20200902203222.185141-1-anthony.l.nguyen@intel.com/#2535008})
+and some documentation material provided by RedHat (link: \url{https://people.redhat.com/lbiancon/conference/NetDevConf2020-0x14/add-xdp-on-driver.html}).
+
+Our work is mainly focused in \texttt{onic\_netdev.c}, where we added all the
+\texttt{onic\_xdp\_\*} functions, the most relevant of which are:
+
+\begin{itemize}
+  \item \texttt{onic\_xdp()}: entry-point of for the XDP subsystem, does some
+    initialization
+  \item \texttt{onic\_run\_xdp()}: main function that executes the XDP program
+    on each received packet and handles the return value of the program; invoked
+    for each packet by the main driver polling loop in \texttt{onic\_poll()}
+  \item \texttt{onic\_xdp\_xmit()}: used to submit XDP packets for transmit
+\end{itemize}
+
+We have also added support for querying XDP statistics through \texttt{ethtool}.
+Those changes have been done mainly to the \texttt{onic\_ethtool.c} file.
 
 
 \section{Project outcomes}
 
 \subsection{Concrete outcomes}
-Describe the artifacts you've produced, if possible by linking to repo commits.
-For those who choose to work on an open source project, please put here the 
-\textbf{URL to your final pull request}.
+%Describe the artifacts you've produced, if possible by linking to repo commits.
+%For those who choose to work on an open source project, please put here the
+%\textbf{URL to your final pull request}.
+%
+%Those that have chosen to present a paper can include a link to the slides.
 
-Those that have chosen to present a paper can include a link to the slides.
+We have produced a series of commits on a fork of the OpenNIC repository
+implementing XDP offload and a repo containing some tests for the various return
+values of XDP programs.
+
+Links:
+
+\begin{itemize}
+  \item Commits implementing XDP: \url{https://github.com/marcomole00/open-nic-driver/commits/xdp-support/}
+  \item Diff w.r.t. upstream: \url{https://github.com/Xilinx/open-nic-driver/compare/main...marcomole00:open-nic-driver:xdp-support}
+  \item Testing repo: \url{https://github.com/alexbradd/ebpf-xdp-test-suite}
+\end{itemize}
 
 \subsection{Learning outcomes}
 
@@ -118,18 +160,31 @@ Examples:
 \end{itemize}
 
 \subsection{Existing knowledge}
-What courses you have followed (not only AOS) did help you in doing this project
-and why? Do you have any suggestions on improving the AOS course with topics
-that would have made it easier for you?
+%What courses you have followed (not only AOS) did help you in doing this project
+%and why? Do you have any suggestions on improving the AOS course with topics
+%that would have made it easier for you?
+
+Both Bradatan and Molè followed profs. Antichi and Miano's Network Computing
+course.
+
+%% TODO: gli suggeriamo qualcosa o lasciamo così?
 
 \subsection{Problems encountered}
-What were the most important problems and issues you encountered? Did you ever
-encountered them before? 
+%What were the most important problems and issues you encountered? Did you ever
+%encountered them before?
+%
+%\begin{itemize}
+%\item Foo encountered a problem with some critical sections. He ended up
+%  rewriting existing lock implementation.
+%\end{itemize}
 
-\begin{itemize}
-\item Foo encountered a problem with some critical sections. He ended up
-  rewriting existing lock implementation.
-\end{itemize}
+The main problem we encountered was the lack of (or when present
+poor quality of) documentation on some parts of the linux networking stack and
+on OpenNIC driver code. This required some hunting around sources and
+cross-referencing with other driver's implementations to get resolved.
+
+%% TODO: consideriamo "alcune volte l'API interna del kernel è cambiata e ciò ha
+%%       rotto le balle" come problema?
 
 \section{Honor Pledge}
 (\textbf{This part cannot be modified and it is mandatory to sign it})
@@ -140,7 +195,7 @@ Conduct) and represents my/our original production, unless otherwise cited.
 
 I/We also understand that this project, if successfully graded,  will fulfill part B requirement of the
 Advanced Operating System course and that it will be considered valid up until
-the AOS exam of Sept. 2022. 
+the AOS exam of Sept. 2022.
 
 \begin{flushright}
 Group Students' signatures
