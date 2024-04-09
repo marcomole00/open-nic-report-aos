@@ -4,7 +4,7 @@
 \usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage[colorinlistoftodos]{todonotes}
-\PassOptionsToPackage{hyphens}{url}\usepackage{hyperref}
+\PassOptionsToPackage{hyphens}{url}\usepackage[hidelinks]{hyperref}
 \usepackage{geometry}
 \geometry{top=3cm,left=2cm,right=2cm,bottom=3cm}
 \usepackage[scaled]{helvet}
@@ -102,8 +102,8 @@ Linux kernel.
 % Those that have chosen to present a paper can exclude this section.
 
 We based our implementation based on some previous work done on the Intel
-driver (link: \url{https://patchwork.ozlabs.org/project/intel-wired-lan/patch/20200902203222.185141-1-anthony.l.nguyen@intel.com/#2535008})
-and some documentation material provided by RedHat (link: \url{https://people.redhat.com/lbiancon/conference/NetDevConf2020-0x14/add-xdp-on-driver.html}).
+driver~\footnote{\url{https://patchwork.ozlabs.org/project/intel-wired-lan/patch/20200902203222.185141-1-anthony.l.nguyen@intel.com/\#2535008}}
+and some documentation material provided by RedHat~\footnote{\url{https://people.redhat.com/lbiancon/conference/NetDevConf2020-0x14/add-xdp-on-driver.html}}.
 
 Our work is mainly focused in \texttt{onic\_netdev.c}, where we added all the
 \texttt{onic\_xdp\_\*} functions, the most relevant of which are:
@@ -150,7 +150,7 @@ Links:
 \begin{itemize}
 
 \item We gained insights on how the linux kernel code is structured and how to navigate it
-effectively when searching for a specific function. We made extensive use of the \textit{Elixir Cross Referencer} \footnote{\url{https://elixir.bootlin.com}}.
+effectively when searching for a specific function. We made extensive use of the \textit{Elixir Cross Referencer}~\footnote{\url{https://elixir.bootlin.com}}.
 
 \item We learned to search in commit messages or mailing list archives when in doubt about certain pieces of code.
 \item We learned how to correctly setup the environment for kernel module programming.
@@ -177,6 +177,13 @@ Bradatan followed profs. Antichi and Miano's Network Computing course last year,
 Molè is following it this semester. The course provides insights on how the Linux
 network stack is implemented.
 
+This project focused on some topics taught in the Network Computing course. To
+avoid increasing too much the scope of the AOS course and to avoid overlap with
+the Network Computing course we do not feel like recommending adding networking
+topics to the AOS course. Moreover, profs. Antichi and Miano were very available
+to answering any questions and providing course materials one the topics needed
+for the project.
+
 \subsection{Problems encountered}
 %What were the most important problems and issues you encountered? Did you ever
 %encountered them before?
@@ -189,14 +196,12 @@ network stack is implemented.
 The main problem we encountered was the lack of (or when present
 poor quality of) documentation on some parts of the linux networking stack and
 on OpenNIC driver code. This required some hunting around sources and
-cross-referencing with other driver's implementations to get resolved. 
+cross-referencing with other driver's implementations to get resolved.
 
-
-Another thing we had to consider is that the XDP API and the network stack data structures changed 
+Another thing we had to consider is that the XDP API and the network stack data structures changed
 over time and that led to some inconsistency in kernel versions previous to 5.3.0 that hindered us from
-implementing the \textit{onic\_xdp\_xmit\_frame} function function, and thus the support for XDP\_TX and XDP\_REDIRECT in those older versions.  
-%% TODO: consideriamo "alcune volte l'API interna del kernel è cambiata e ciò ha
-%%       rotto le balle" come problema?
+implementing the \textit{onic\_xdp\_xmit\_frame} function, and thus the support
+for \texttt{XDP\_TX} and \texttt{XDP\_REDIRECT} in those older versions.
 
 \section{Honor Pledge}
 (\textbf{This part cannot be modified and it is mandatory to sign it})
