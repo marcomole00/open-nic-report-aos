@@ -8,8 +8,10 @@
 \usepackage{geometry}
 \geometry{top=3cm,left=2cm,right=2cm,bottom=3cm}
 \usepackage[scaled]{helvet}
+\usepackage{chancery}
 \usepackage[T1]{fontenc}
 \renewcommand\familydefault{\sfdefault}
+
 
 
 \author{Alexandru Gabriel Bradatan, Marco Molè}
@@ -80,12 +82,16 @@ extending the kernel's functionality.
 \subsection{Importance to the AOS course}
 This project is relevant to the Advanced Operating System course because it
 requires extending the functionality of a Linux driver. Doing so requires
-understanding how Linux kernel modules are written and compiled, both of which
-are topics of the course.
+understanding:
+
+\begin{itemize}
+  \item How to write code that correctly runs in kernel context
+  \item How to Linux kernel modules are written and compiled
+\end{itemize}
 
 Moreover, implementing XDP requires knowledge of the Linux networking
 stack, which even though is not a topic of the AOS course but of
-the supervisors' Netowrk Computing course, it is still an important part of the
+the supervisors' Network Computing course, it is still an important part of the
 Linux kernel.
 
 
@@ -148,13 +154,14 @@ Links:
 % how you will use what you've learned in your everyday life?
 % Please also indicate which tools you learned to use.
 \begin{itemize}
-
-\item We gained insights on how the linux kernel code is structured and how to navigate it
-effectively when searching for a specific function. We made extensive use of the \textit{Elixir Cross Referencer}~\footnote{\url{https://elixir.bootlin.com}}.
-
-\item We learned to search in commit messages or mailing list archives when in doubt about certain pieces of code.
+\item We gained insight on the inner workings of the Linux networking API and
+  how to write drivers that utilize it
+\item We gained insights on how the linux kernel code is structured and how to
+  navigate it effectively when searching for a specific function. We made
+  extensive use of the \textit{Elixir Cross Referencer}~\footnote{\url{https://elixir.bootlin.com}}.
+\item We learned to search in commit messages or mailing list archives when in
+  doubt about certain pieces of code.
 \item We learned how to correctly setup the environment for kernel module programming.
-
 \end{itemize}
 
 
@@ -216,6 +223,9 @@ the AOS exam of Sept. 2024.
 
 \begin{flushright}
 Group Students' signatures
+
+{\LARGE\normalfont\rmfamily Alexandru Gabriel Bradatan}\\
+{\LARGE\normalfont\rmfamily Marco Molè}
 \end{flushright}
 
 
